@@ -1,10 +1,17 @@
 import React, { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import { url } from './url';
 import { ErrorBoundary } from './ErrorBoundary';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './Home';
+import AddPatient from './routes/AddPatient';
+import Diagnose from './routes/Diagnose';
+import App from './App';
+import Start from './routes/Start';
+import Question from './routes/Question';
+import Scofr from './routes/Scofr';
+import Rsv from './routes/Rsv';
 // import Auth from './Auth';
-
 
 const dev = process.env.NODE_ENV === 'development';
 console.log('all', process.env)
@@ -27,11 +34,26 @@ for (let [key, value] of Object.entries({
     window.pglOptions[key] = value;
   }
 }
-
+window.patients = [
+  { firstName: 'John', lastName: 'Doe', email: 'jdoe@gmail.com' }
+]
+window.notes = []
 ReactDOM.render(
   <ErrorBoundary>
     <StrictMode>
-      check
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<App />} >
+            <Route path="addpatient" element={<AddPatient />} />
+            <Route path="diagnose" element={<Diagnose />} >
+              <Route path="" element={<Start />} />
+              <Route path="question" element={<Question />} />
+              <Route path="scofr" element={<Scofr />} />
+              <Route path="rsv" element={<Rsv />} />
+            </Route>
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </StrictMode>
   </ErrorBoundary>,
   document.getElementById('root')
