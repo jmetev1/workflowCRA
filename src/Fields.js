@@ -9,7 +9,7 @@ import {
   Spinner,
 } from 'evergreen-ui';
 import { url } from './url';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 const height = 48;
 
@@ -63,10 +63,10 @@ export const SubmitButton = function ({ link = '' }) {
       <div>{link || <button onClick={reload}>Add Another</button>}</div>
     </div>
   ) : (
-      <Button onClick={doIt} appearance="primary">
-        Submit
-      </Button>
-    );
+    <Button onClick={doIt} appearance="primary">
+      Submit
+    </Button>
+  );
 };
 
 export const DevInfo = ({ children }) =>
@@ -103,8 +103,8 @@ export const OneVisit = ({ visit = {}, spending }) => {
       {receiptID && receiptID.length ? (
         <Receipt src={`${url}receipt/${receiptID}`} />
       ) : (
-          'No image was uploaded'
-        )}
+        'No image was uploaded'
+      )}
     </>
   );
 };
@@ -132,23 +132,23 @@ export const Receipt = ({ src }) => {
       </div>
     </div>
   ) : (
-      <>
-        <h4>Click To Enlarge</h4>
-        <div style={{ display: 'flex', height: '350px' }}>
-          <div style={{ margin: 'auto', transform: 'rotate(90deg)' }}>
-            <div onClick={toggle}>
-              <img
-                height="250px"
-                onLoad={() => setLoading(false)}
-                src={src}
-                alt="receipt"
-              />
-              {loading && <Spinner />}
-            </div>
+    <>
+      <h4>Click To Enlarge</h4>
+      <div style={{ display: 'flex', height: '350px' }}>
+        <div style={{ margin: 'auto', transform: 'rotate(90deg)' }}>
+          <div onClick={toggle}>
+            <img
+              height="250px"
+              onLoad={() => setLoading(false)}
+              src={src}
+              alt="receipt"
+            />
+            {loading && <Spinner />}
           </div>
         </div>
-      </>
-    );
+      </div>
+    </>
+  );
 };
 
 export const Err = ({ children }) => (

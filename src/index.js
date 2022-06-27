@@ -2,42 +2,24 @@ import React, { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import { ErrorBoundary } from './ErrorBoundary';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Navigate, BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './Home';
 import AddPatient from './routes/AddPatient';
 import Diagnose from './routes/Diagnose';
 import App from './App';
-import Start from './routes/Start';
 import Question from './routes/Question';
 import Scofr from './routes/Scofr';
-import Rsv from './routes/Rsv';
-// import Auth from './Auth';
-
+import { questionContent } from './questions';
+import { Notes } from './Notes';
 const dev = process.env.NODE_ENV === 'development';
-console.log('all', process.env)
-console.log('dev', process.env.NODE_ENV)
-if (!window.pglOptions) window.pglOptions = {};
-// const userPromise = fetch(url + 'login', { credentials: 'include' });
 
-for (let [key, value] of Object.entries({
-  dev,
-  validate: true,
-  prefill: dev,
-  showState: dev,
-  settings: dev,
-  stayLoggedIn: false,
-})) {
-  const ls = localStorage[key]; //it's a string!!!!!
-  if (ls) {
-    window.pglOptions[key] = ls === 'true' ? true : false;
-  } else {
-    window.pglOptions[key] = value;
-  }
-}
+const { start, rsv, scofr, noflulike } = questionContent;
 window.patients = [
-  { firstName: 'John', lastName: 'Doe', email: 'jdoe@gmail.com' }
+  { firstName: 'John', lastName: 'Doe', email: 'jdoe@gmail.com' },
+  { firstName: 'Jane', lastName: 'Roberts', email: 'jrobers@hotmail.com' }
 ]
-window.notes = []
+
+
 ReactDOM.render(
   <ErrorBoundary>
     <StrictMode>
@@ -45,12 +27,17 @@ ReactDOM.render(
         <Routes>
           <Route path="/" element={<App />} >
             <Route path="addpatient" element={<AddPatient />} />
+            <Route path="home" element={<Home />} />
+            <Route path='notes' element={<Notes />} />
             <Route path="diagnose" element={<Diagnose />} >
-              <Route path="" element={<Start />} />
+              <Route path="" element={<Question {...start} />} />
               <Route path="question" element={<Question />} />
               <Route path="scofr" element={<Scofr />} />
-              <Route path="rsv" element={<Rsv />} />
+              <Route path="rsv" element={<Question {...rsv} />} />
+              <Route path='noflulike' element={<Question {...noflulike} />} />
+              <Route path="*" element={<div>not found</div>} />
             </Route>
+            <Route path="/" element={<Navigate replace to="/home" />} />
           </Route>
         </Routes>
       </BrowserRouter>
@@ -69,3 +56,4 @@ ReactDOM.render(
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: http://bit.ly/CRA-PWA
 // serviceWorker.unregister();
+//     background-image: linear-gradient(to bottom, #0788DE, #116AB

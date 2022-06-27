@@ -1,63 +1,37 @@
-import React, { Fragment, useState } from 'react';
-import { url } from './url';
-
-import {
-  Button, Dialog, TextInputField,
-  Pane,
-  SelectField,
-  Textarea,
-  Spinner,
-} from 'evergreen-ui';
+import React from 'react';
+import { Button } from 'evergreen-ui';
 
 import { NavLink } from 'react-router-dom';
 
 export const Nav = ({ user }) => {
-  const MyButton = (props) => (
-    <Button style={{ flex: '1 1 33%' }} height="36" {...props} />
-  );
+  const MyButton = (props) => <Button style={{ flex: '1 1 33%' }} height="36" {...props} />
+
   const style = { margin: 'auto' };
 
   return (
     <nav style={{ display: 'flex', flexWrap: 'wrap' }}>
-      {Object.entries(routeNames)
-        .map(([label, [url]]) => {
-          return (
-            <MyButton
-              key={label}
-              appearance={
-                window.location.href.includes(url) ? 'primary' : 'default'
-              }
-            >
-              <NavLink
-                to={`/${url}`}
-                style={{
-                  width: '100%',
-                  textDecoration: 'none',
-                  color: 'unset',
-                }}
-              >
-                <span style={style}>{label}</span>
-              </NavLink>
-            </MyButton>
-          );
-        })}
-    </nav>
+      {Object.entries(routeNames).map(([label, [url]]) => (
+        <NavLink
+          key={label}
+          to={`/${url}`}
+          style={{ flex: '1 1 33%', height: '36px' }}
+        >{({ isActive }) => (
+          <MyButton
+            key={label}
+            appearance={isActive ? 'primary' : 'default'}
+            style={{ width: '100%' }}
+          >
+            <span style={style}>{label}</span>
+          </MyButton>
+        )}</NavLink>)
+      )}
+    </nav >
   );
 };
 
-
 export const routeNames = {
-  // 'Past Visits': ['pastvisits'],
-  // 'Add Clinic': ['addclinic'],
-  // 'Add Provider': ['addprovider'],
-  // 'Add Visit': ['addvisit'],
-  // Settings: ['settings'],
-  Home: [''],
+  Home: ['home'],
   'Add Patient': ['addpatient'],
   'Diagnose': ['diagnose'],
+  Notes: ['notes'],
 };
-
-
-
-
-// export default Home;

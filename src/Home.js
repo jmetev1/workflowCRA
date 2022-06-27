@@ -1,14 +1,11 @@
 import React, { Fragment, useState } from 'react';
 
-import { Nav } from './Nav';
-
-
 const Home = ({ user }) => (
   <Fragment>
-    <Nav />
+    home
   </Fragment>
-
 )
 
 
 export default Home;
+//    background-image: linear-gradient(to bottom, #0788DE, #116AB8);
